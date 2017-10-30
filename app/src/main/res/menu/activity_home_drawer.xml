@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_sportpesa"
+            android:title="Sportpesa" />
+        <item
+            android:id="@+id/nav_bet9ja"
+            android:title="Bet9ja" />
+        <item
+            android:id="@+id/nav_betin"
+            android:title="Betin" />
+        <item
+            android:id="@+id/nav_elite"
+            android:title="Elitebet" />
+        <item
+            android:id="@+id/nav_betway"
+            android:title="Betway" />
+        <item android:id="@+id/nav_mbet"
+            android:title="M-Bet"/>
+    </group>
+
+
+</menu>

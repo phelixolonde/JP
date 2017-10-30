@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Jackpot Predictions</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="_23_june">date</string>
+    <string name="post">post</string>
+    <string name="post_time">time</string>
+    <string name="jackpot_predictions">Jackpot Predictions</string>
+    <string name="feedback">Feedback</string>
+    <string name="about">About app</string>
+    <string name="rate_us_please">Rate us please</string>
+    <string name="share">Share</string>
+    <string name="submit_feedback">Submit</string>
+    <string name="your_email_address">Email Address</string>
+    <string name="interstitial">ca-app-pub-7130350208213886/3021698057</string>
+    <string name="native_ad">ca-app-pub-7130350208213886/8891384059</string>
+</resources>
