@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -53,7 +54,7 @@ public class Home extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        displayView(R.id.nav_view);
+        displayView(R.id.nav_betyetu);
 
     }
 
@@ -155,7 +156,7 @@ public class Home extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         displayView(id);
 
@@ -166,14 +167,14 @@ public class Home extends AppCompatActivity
 
     public void displayView(int viewId) {
 
-        Fragment fragment = null;
-        String title = "";
+        Fragment fragment ;
+        String title ;
 
         switch (viewId) {
-            case R.id.nav_sportpesa:
-                fragment = new Sportpesa();
-                title = "Sportpesa";
 
+            case R.id.nav_betyetu:
+                fragment=new FragmentSportPesa();
+                title="Sport Pesa";
                 break;
             case R.id.nav_bet9ja:
                 fragment = new Bet9ja();
@@ -192,15 +193,14 @@ public class Home extends AppCompatActivity
                 title = "Elitebet";
                 break;
             default:
-                fragment = new Sportpesa();
+                fragment = new FragmentSportPesa();
                 title = "Sportpesa";
+                break;
         }
 
-        if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.commit();
-        }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
 
         // set the toolbar title
         if (getSupportActionBar() != null) {

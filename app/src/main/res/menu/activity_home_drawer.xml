@@ -3,8 +3,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_sportpesa"
-            android:title="Sportpesa" />
+            android:id="@+id/nav_betyetu"
+            android:title="Sport Pesa" />
+
         <item
             android:id="@+id/nav_bet9ja"
             android:title="Bet9ja" />

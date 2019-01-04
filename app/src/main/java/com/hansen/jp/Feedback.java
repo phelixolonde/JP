@@ -10,11 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class Feedback extends AppCompatActivity {
     Button btnSubmit;
     EditText txtFeed, txtEmail;
     String email;
-
+    private AdView mBannerAd;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,8 @@ public class Feedback extends AppCompatActivity {
         txtFeed = (EditText) findViewById(R.id.txtFeed);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         email = txtEmail.getText().toString();
+        mBannerAd = (AdView) findViewById(R.id.banner_AdView);
+        showBannerAd();
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +53,12 @@ public class Feedback extends AppCompatActivity {
         });
 
     }
+    private void showBannerAd() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mBannerAd.loadAd(adRequest);
 
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();

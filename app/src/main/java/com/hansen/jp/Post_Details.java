@@ -25,10 +25,10 @@ public class Post_Details extends AppCompatActivity {
     DatabaseReference mRef;
     String postKey;
     TextView tvTitle, tvBody, tvTime;
-    private InterstitialAd mInterstitialAd;
     ImageView imgBody;
     ProgressDialog pd;
     String selection;
+    private AdView mBannerAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +40,18 @@ public class Post_Details extends AppCompatActivity {
         setContentView(R.layout.activity_post_detailed);
 
         postKey = getIntent().getExtras().getString("postKey");
-        selection=getIntent().getExtras().getString("selection");
+        selection = getIntent().getExtras().getString("selection");
         tvBody = (TextView) findViewById(R.id.tvBody);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTime = (TextView) findViewById(R.id.post_time);
         imgBody = (ImageView) findViewById(R.id.imgBody);
-        pd=new ProgressDialog(this);
+        pd = new ProgressDialog(this);
         pd.setMessage("Loading...");
         pd.show();
 
-       final NativeExpressAdView adView = (NativeExpressAdView) findViewById(R.id.adView);
-        adView.loadAd(new AdRequest.Builder().build());
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                adView.setVisibility(View.VISIBLE);
-            }
-        });
+        mBannerAd = (AdView) findViewById(R.id.banner_AdView);
+        showBannerAd();
+
 
         if (postKey != null) {
 
@@ -65,29 +60,32 @@ public class Post_Details extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String title = dataSnapshot.child("title").getValue().toString();
-                String body = dataSnapshot.child("body").getValue().toString();
-                Long time = (Long) dataSnapshot.child("time").getValue();
-                if (title != null) {
-                    tvTitle.setText(title.toUpperCase());
-                    pd.dismiss();
-                } else {
-                    Toast.makeText(Post_Details.this, "Check your internet connection and try again", Toast.LENGTH_SHORT).show();
-                }
-                if (body != null) {
-                    tvBody.setText(body);
+                try {
+                    String title = dataSnapshot.child("title").getValue().toString();
+                    String body = dataSnapshot.child("body").getValue().toString();
+                    Long time = (Long) dataSnapshot.child("time").getValue();
+                    if (title != null) {
+                        tvTitle.setText(title.toUpperCase());
+                        pd.dismiss();
+                    } else {
+                        Toast.makeText(Post_Details.this, "Check your internet connection and try again", Toast.LENGTH_SHORT).show();
+                    }
+                    if (body != null) {
+                        tvBody.setText(body);
 
-                }
-                if (time != null) {
-                    setTime(time);
-                }
-                if (dataSnapshot.hasChild("image")){
-                    String image= (String) dataSnapshot.child("image").getValue();
+                    }
+                    if (time != null) {
+                        setTime(time);
+                    }
+                    if (dataSnapshot.hasChild("image")) {
+                        String image = (String) dataSnapshot.child("image").getValue();
 
-                }
+                    }
 
+                } catch (Exception e) {
+                    Toast.makeText(Post_Details.this, "An error occured somewhere.Please reload page", Toast.LENGTH_SHORT).show();
+                }
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -97,51 +95,13 @@ public class Post_Details extends AppCompatActivity {
 
     }
 
-
-   /* private InterstitialAd createNewIntAd() {
-        InterstitialAd intAd = new InterstitialAd(PostDetailed.this);
-        // set the adUnitId (defined in values/strings.xml)
-        intAd.setAdUnitId(getString(R.string.interstitial));
-        intAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        showIntAdd();
-                    }
-                }, 6000);
-
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-
-
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Proceed to the next level.
-            }
-        });
-        return intAd;
-    }
-
-    private void loadIntAdd() {
+    private void showBannerAd() {
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
-        mInterstitialAd.loadAd(adRequest);
+        mBannerAd.loadAd(adRequest);
+
     }
 
-    private void showIntAdd() {
-
-// Show the ad if it's ready. Otherwise toast and reload the ad.
-        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }
-    }
-*/
     @Override
     public void onBackPressed() {
         finish();

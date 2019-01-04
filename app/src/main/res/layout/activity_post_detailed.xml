@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -77,6 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:paddingBottom="50dp"
                 android:text="Congratulations to all winners of yesterday.
 We won 100%"
                 android:textIsSelectable="true"
@@ -87,15 +87,17 @@ We won 100%"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.google.android.gms.ads.NativeExpressAdView
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                ads:adSize="350x150"
-                ads:adUnitId="@string/native_ad"
 
-                />
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner_AdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_id_banner" />
 
 </RelativeLayout>

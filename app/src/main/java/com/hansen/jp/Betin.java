@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.database.DataSnapshot;
@@ -36,8 +37,7 @@ public class Betin extends Fragment {
     DatabaseReference mDatabaseReference;
     FirebaseRecyclerAdapter<Model, ItemViewHolder> firebaseRecyclerAdapter;
 
-
-    private InterstitialAd mInterstitialAd;
+    private AdView mBannerAd;
     TextView txtLoading;
 
     @Override
@@ -55,19 +55,38 @@ public class Betin extends Fragment {
         //mLayoutManager.setReverseLayout(true);
         //mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        final NativeExpressAdView adView = (NativeExpressAdView) view.findViewById(R.id.adView);
-        adView.loadAd(new AdRequest.Builder().build());
-        adView.setAdListener(new AdListener() {
+        mBannerAd = (AdView) view.findViewById(R.id.banner_AdView);
+        mBannerAd.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                adView.setVisibility(View.VISIBLE);
+                super.onAdLoaded();
+                mBannerAd.setVisibility(View.VISIBLE);
+            }
+        });
+        showBannerAd();
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount()==0){
+                    txtLoading.setText("No tips at the moment. Please check again later.");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
         return view;
     }
 
+    private void showBannerAd() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mBannerAd.loadAd(adRequest);
 
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -128,7 +147,7 @@ public class Betin extends Fragment {
         public void setPrice(String price) {
 
             TextView txtPrice = (TextView) mView.findViewById(R.id.post);
-            txtPrice.setText("Ksh. " + price);
+            txtPrice.setText(price);
 
         }
 
